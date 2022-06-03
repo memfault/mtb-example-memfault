@@ -1,14 +1,13 @@
-# Secure TCP client
+# Memfault Network Example
 
-This code example demonstrates the implementation of a secure TCP client with PSoC&trade; 6 MCU with AIROC™ CYW43xxx Wi-Fi & Bluetooth® combo chips.
+Example application for ModusToolbox, loosely based on the
+[mtb-example-anycloud-secure-tcp-client ](https://github.com/Infineon/mtb-example-anycloud-secure-tcp-client) application.
 
-In this example, a TCP client establishes a secure connection with a TCP server through an SSL handshake. Once the SSL handshake completes successfully, the TCP client turns ON or OFF the user LED based on the command received from the TCP server. The Wi-Fi device can be brought up in either STA or Soft AP interface mode. Additionally, this code example can be configured to work with IPv4 or link-local IPv6 addressing mode.
- 
+This code example demonstrates the integration of Memfault with PSoC&trade; 6 MCU with AIROC™ CYW43xxx Wi-Fi & Bluetooth® combo chips.
 
-[View this README on GitHub.](https://github.com/Infineon/mtb-example-anycloud-secure-tcp-client)
-
-[Provide feedback on this code example.](https://cypress.co1.qualtrics.com/jfe/form/SV_1NTns53sK2yiljn?Q_EED=eyJVbmlxdWUgRG9jIElkIjoiQ0UyMjkyNTIiLCJTcGVjIE51bWJlciI6IjAwMi0yOTI1MiIsIkRvYyBUaXRsZSI6IlNlY3VyZSBUQ1AgY2xpZW50IiwicmlkIjoic2RhayIsIkRvYyB2ZXJzaW9uIjoiMy4wLjAiLCJEb2MgTGFuZ3VhZ2UiOiJFbmdsaXNoIiwiRG9jIERpdmlzaW9uIjoiTUNEIiwiRG9jIEJVIjoiSUNXIiwiRG9jIEZhbWlseSI6IlBTT0MifQ==)
-
+For step by steps on how to integrate the
+[memfault-firmware-sdk](https://github.com/memfault/memfault-firmware-sdk/commits) into your own
+project, see the following guide: https://mflt.io/mtb-integration-guide
 
 ## Requirements
 
@@ -50,115 +49,34 @@ Install a Python interpreter if you don't have one. This code example is tested 
 
 ## Using the code example
 
-Create the project and open it using one of the following:
-
-<details><summary><b>In Eclipse IDE for ModusToolbox&trade; software</b></summary>
-
-1. Click the **New Application** link in the **Quick Panel** (or, use **File** > **New** > **ModusToolbox Application**). This launches the [Project Creator](https://www.cypress.com/ModusToolboxProjectCreator) tool.
-
-2. Pick a kit supported by the code example from the list shown in the **Project Creator - Choose Board Support Package (BSP)** dialog.
-
-   When you select a supported kit, the example is reconfigured automatically to work with the kit. To work with a different supported kit later, use the [Library Manager](https://www.cypress.com/ModusToolboxLibraryManager) to choose the BSP for the supported kit. You can use the Library Manager to select or update the BSP and firmware libraries used in this application. To access the Library Manager, click the link from the **Quick Panel**.
-
-   You can also just start the application creation process again and select a different kit.
-
-   If you want to use the application for a kit not listed here, you may need to update the source files. If the kit does not have the required resources, the application may not work.
-
-3. In the **Project Creator - Select Application** dialog, choose the example by enabling the checkbox.
-
-4. (Optional) Change the suggested **New Application Name**.
-
-5. The **Application(s) Root Path** defaults to the Eclipse workspace which is usually the desired location for the application. If you want to store the application in a different location, you can change the *Application(s) Root Path* value. Applications that share libraries should be in the same root path.
-
-6. Click **Create** to complete the application creation process.
-
-For more details, see the [Eclipse IDE for ModusToolbox&trade; software user guide](https://www.cypress.com/MTBEclipseIDEUserGuide) (locally available at *{ModusToolbox&trade; software install directory}/ide_{version}/docs/mt_ide_user_guide.pdf*).
-
-</details>
-
-<details><summary><b>In command-line interface (CLI)</b></summary>
-
-ModusToolbox&trade; software provides the Project Creator as both a GUI tool and the command line tool, "project-creator-cli". The CLI tool can be used to create applications from a CLI terminal or from within batch files or shell scripts. This tool is available in the *{ModusToolbox&trade; software install directory}/tools_{version}/project-creator/* directory.
-
-Use a CLI terminal to invoke the "project-creator-cli" tool. On Windows, use the command line "modus-shell" program provided in the ModusToolbox&trade; software installation instead of a standard Windows command-line application. This shell provides access to all ModusToolbox&trade; software tools. You can access it by typing `modus-shell` in the search box in the Windows menu. In Linux and macOS, you can use any terminal application.
-
-This tool has the following arguments:
-
-Argument | Description | Required/optional
----------|-------------|-----------
-`--board-id` | Defined in the `<id>` field of the [BSP](https://github.com/Infineon?q=bsp-manifest&type=&language=&sort=) manifest | Required
-`--app-id`   | Defined in the `<id>` field of the [CE](https://github.com/Infineon?q=ce-manifest&type=&language=&sort=) manifest | Required
-`--target-dir`| Specify the directory in which the application is to be created if you prefer not to use the default current working directory | Optional
-`--user-app-name`| Specify the name of the application if you prefer to have a name other than the example's default name | Optional
-
-<br>
-
-The following example will clone the "[Hello World](https://github.com/Infineon/mtb-example-psoc6-hello-world)" application with the desired name "MyHelloWorld" configured for the *CY8CKIT-062-WIFI-BT* BSP into the specified working directory, *C:/mtb_projects*:
-
-   ```
-   project-creator-cli --board-id CY8CKIT-062-WIFI-BT --app-id mtb-example-psoc6-hello-world --user-app-name MyHelloWorld --target-dir "C:/mtb_projects"
-   ```
-
-**Note:** The project-creator-cli tool uses the `git clone` and `make getlibs` commands to fetch the repository and import the required libraries. For details, see the "Project creator tools" section of the [ModusToolbox&trade; software user guide](https://www.cypress.com/ModusToolboxUserGuide) (locally available at *{ModusToolbox&trade; software install directory}/docs_{version}/mtb_user_guide.pdf*).
-
-</details>
-
-<details><summary><b>In third-party IDEs</b></summary>
-
-Use one of the following options:
-
-- **Use the standalone [Project Creator](https://www.cypress.com/ModusToolboxProjectCreator) tool:**
-
-   1. Launch Project Creator from the Windows Start menu or from *{ModusToolbox&trade; software install directory}/tools_{version}/project-creator/project-creator.exe*.
-
-   2. In the initial **Choose Board Support Package** screen, select the BSP, and click **Next**.
-
-   3. In the **Select Application** screen, select the appropriate IDE from the **Target IDE** drop-down menu.
-
-   4. Click **Create** and follow the instructions printed in the bottom pane to import or open the exported project in the respective IDE.
-
-<br>
-
-- **Use command-line interface (CLI):**
-
-   1. Follow the instructions from the **In command-line interface (CLI)** section to create the application, and then import the libraries using the `make getlibs` command.
-
-   2. Export the application to a supported IDE using the `make <ide>` command.
-
-   3. Follow the instructions displayed in the terminal to create or import the application as an IDE project.
-
-For a list of supported IDEs and more details, see the "Exporting to IDEs" section of the [ModusToolbox&trade; software user guide](https://www.cypress.com/ModusToolboxUserGuide) (locally available at *{ModusToolbox&trade; software install directory}/docs_{version}/mtb_user_guide.pdf*).
-
-</details>
 
 
 ## Operation
 
 1. Connect the board to your PC using the provided USB cable through the KitProg3 USB connector.
 
-2. The kit can be configured to run either as Wi-Fi STA interface mode or in AP interface mode. The interface mode is configured using  the `USE_AP_INTERFACE` macro defined in the *network_credentials.h* file. Based on the desired interface mode, do the following:
+2. The kit is configured to run in Wi-Fi STA interface mode.
 
-   **Kit in STA mode (default interface):**
+   1. Modify the `WIFI_SSID`, `WIFI_PASSWORD` macros to match that of the Wi-Fi network credentials
+      that you want to connect to. These macros are defined in the
+      [source/memfault_example_app.h](source/memfault_example_app.h) file.
 
-   1. Set the `USE_AP_INTERFACE` macro to '0'. This is the default mode.
+3. If you already have a Memfault account, navigate [here](https://mflt.io/project-key) to create a
+   project key. (If you do not have an account sign up for a Memfault account
+   [here](https://mflt.io/signup) and create a project). Modify the `MEMFAULT_PROJECT_KEY` macro in
+   [source/memfault_example_app.h](source/memfault_example_app.h) file.
 
-   2. Modify the `WIFI_SSID`, `WIFI_PASSWORD`, and `WIFI_SECURITY_TYPE` macros to match that of the Wi-Fi network credentials that you want to connect to. These macros are defined in the *network_credentials.h* file. Ensure that the Wi-Fi network that you are connecting to is configured as a private network for the proper functioning of this example.
+4. Build the example application. Using the CLI this can be achieved by running the following from
+the root directory:
 
-   **Kit in AP mode:**
+```bash
+make getlibs # only needs to be called once
+make build
+```
 
-   1. Set the `USE_AP_INTERFACE` macro to '1'.
+5. Open a terminal program and select the KitProg3 COM port. Set the serial port parameters to 8N1 and 115200 baud.
 
-   2. Update the `SOFTAP_SSID`, `SOFTAP_PASSWORD`, and `SOFTAP_SECURITY_TYPE` macros as desired. This step is optional.
-
-3. Configure the IP addressing mode. By default, IPv4-based addressing is used. To use IPv6 addressing mode, set the `USE_IPV6_ADDRESS` macro defined in the *secure_tcp_server.h* file as shown below:
-
-   ```
-   #define USE_IPV6_ADDRESS				      (1)
-   ```
-
-4. Open a terminal program and select the KitProg3 COM port. Set the serial port parameters to 8N1 and 115200 baud.
-
-5. Program the board using one of the following:
+6. Program the board using one of the following:
 
    <details><summary><b>Using Eclipse IDE for ModusToolbox&trade; software</b></summary>
 
@@ -178,103 +96,91 @@ For a list of supported IDEs and more details, see the "Exporting to IDEs" secti
       ```
       make program TARGET=CY8CPROTO-062-4343W TOOLCHAIN=GCC_ARM
       ```
-   </details>
+      </details>
 
+7. Upload the symbol file to see decoded data on the Memfault web app (upload the .elf file, either via the web app or using the [Memfault CLI tool](https://docs.memfault.com/docs/mcu/symbol-file-build-ids/#upload-symbol-files-cli))
 
-   After programming, the application starts automatically. Confirm that the text as shown in either one of the following figures is displayed on the UART terminal. Note that the Wi-Fi SSID and the IP address assigned will be different based on the network that you have connected to; in AP mode, the AP credentials will be different based on your configuration in Step 2.
+## Running the Example Application
 
-   **Figure 1. Wi-Fi connection status (IPv4 address and STA mode)**
+The board will automatically attempt to bring up the network interface on boot. If it fails,
+posting data from the board will not work, but the CLI will still be available for manually
+uploading chunk data. On success you should see something like the following:
 
-   ![](images/wifi-conn-status-ipv4-sta-mode.png)
+```
+[I] Memfault Build ID: 1d63b5daaa91c74ad352d16533417604219beec1
+[I] S/N: DEMOSERIAL
+[I] SW type: app-fw
+[I] SW version: 1.0.0-dev
+[I] HW version: dvt1
+[I] Reset Reason, Cy_SysLib_GetResetReason=0x10
+[I] Reset Cause:
+[I]  Software Reset
+[I] Memfault Initialized!
 
-   <br>
+WLAN MAC Address : C4:AC:59:9C:5C:5C
+WLAN Firmware    : wl0: Apr 12 2022 20:39:36 version 13.10.271.287 (760d561 CY) FWID 01-b438e2a0
+WLAN CLM         : API: 18.2 Data: 9.10.0 Compiler: 1.36.1 ClmImport: 1.34.1 Creation: 2021-04-26 04:01:15
+WHD VERSION      : v2.3.0 : v2.3.0 : GCC 10.3 : 2022-04-13 14:02:24 +0800
+[I] Wi-Fi Connection Manager initialized.
+[I] Successfully connected to Wi-Fi network
+[I] IPv4 address assigned: 192.168.1.19
 
-   **Figure 2. Wi-Fi connection status (IPv6 address and STA mode)**
+[I] Secure Socket initialized
+[I] Global trusted RootCA certificate loaded
+[I] Posting Memfault Data...
+[D] Response Complete: Parse Status 0 HTTP Status 202!
+[D] Body: Accepted
+```
 
-   ![](images/wifi-conn-status-ipv6-sta-mode.png)
+To see debug options, run the `help` command:
 
-   <br>
+```
+mflt> help
+get_core: Get coredump info
+clear_core: Clear an existing coredump
+crash: Trigger a crash
+trigger_logs: Trigger capture of current log buffer contents
+drain_chunks: Flushes queued Memfault data. To upload data see https://mflt.io/posting-chunks-with-gdb
+trace: Capture an example trace event
+get_device_info: Get device info
+reboot: Reboot system and tracks it with a trace event
+export: Export base64-encoded chunks. To upload data see https://mflt.io/chunk-data-export
+help: Lists all commands
+```
 
-   **Figure 3. Wi-Fi connection status (IPv4 address and AP mode)**
+An example crash can be forced using the `crash` command:
 
-   ![](images/wifi-conn-status-ipv4-ap-mode.png)
+```
+mflt> crash 1
+[... device will reboot and post data on reboot ...]
+[I] Memfault Build ID: 5f455f3ce017f5f93666dfbc6fa016b680b72901
+[I] S/N: DEMOSERIAL
+[I] SW type: app-fw
+[I] SW version: 1.0.0-dev
+[I] HW version: dvt1
+[I] Reset Reason, Cy_SysLib_GetResetReason=0x10
+[I] Reset Cause:
+[I]  Software Reset
+[I] Memfault Initialized!
 
-   Similarly, when the CE is configured for IPv6 and AP mode, the IPv4 address displayed in Figure 3 will be replaced by the IPv6 address.
+mflt> WLAN MAC Address : C4:AC:59:9C:5C:5C
+WLAN Firmware    : wl0: Apr 12 2022 20:39:36 version 13.10.271.287 (760d561 CY) FWID 01-b438e2a0
+WLAN CLM         : API: 18.2 Data: 9.10.0 Compiler: 1.36.1 ClmImport: 1.34.1 Creation: 2021-04-26 04:01:15
+WHD VERSION      : v2.3.0 : v2.3.0 : GCC 10.3 : 2022-04-13 14:02:24 +0800
+[I] Wi-Fi Connection Manager initialized.
+[I] Successfully connected to Wi-Fi network 'MyCharterWiFif2-2G'
+[I] IPv4 address assigned: 192.168.1.19
 
-6. Connect your computer to the Wi-Fi AP that you have configured in Step 2:
+[I] Secure Socket initialized
+[I] Global trusted RootCA certificate loaded
+[D] Response Complete: Parse Status 0 HTTP Status 202!
+[D] Body: Accepted
+[D] Response Complete: Parse Status 0 HTTP Status 202!
+[D] Body: Accepted
+```
 
-   - **In STA mode:** Connect the computer to the same AP to which the kit is connected.
+A 1-second timer runs that will attempt to upload any data generated by the Memfault library (core dumps, metrics, etc).
 
-   - **In AP mode:** Connect the computer to the kit's AP.
-
-7. Determine the computer's IP address.
-
-   To determine the IP address, type the following command in the command shell based on your operating system:
-
-   Windows: `ipconfig`
-
-   Linux: `curl ifconfig.me`
-
-   macOS: `ifconfig |grep inet`
-
-8. Ensure that a Python interpreter (see [Software setup](#software-setup)) is installed on your computer.
-
-9. Open a command shell from the project directory and run the Python TCP secure server (*{project directory}\python-secure-tcp-server*).
-
-10. In the command shell opened in the project directory, type in the following command based on the IP addressing mode configuration:
-
-     **For IPv4-based addressing:**
-
-     ```
-     python tcp_secure_server.py
-     ```
-
-     **For link-local IPv6-based addressing:**
-
-     ```
-     python tcp_secure_server.py ipv6
-     ```
-
-     **Note:** Ensure that the firewall settings of your computer allow access to the Python software so as to allow communication with the TCP client. See this [community thread](https://community.cypress.com/thread/53662).
-
-11. In the terminal program, enter the IP address determined in Step 7.
-
-12. From the Python secure TCP server, send the command to turn the LED ON or OFF to the TCP client ('0' to turn the LED OFF and '1' to turn the LED ON). Observe the user LED (CYBSP_USER_LED) turning ON/OFF on the board.
-
-      **Figure 4. LED status on TCP server (IPv4 addressing mode)**
-
-      ![](images/tcp-server-ipv4-output.png)
-
-      <br>
-
-      **Figure 5. LED status on TCP client (IPv4 addressing and STA mode)**
-
-      ![](images/tcp-client-ipv4-output-sta-mode.png)
-
-      <br>
-
-      **Figure 6. LED status on TCP client (IPv4 addressing and AP mode)**
-
-      ![](images/tcp-client-ipv4-output-ap-mode.png)
-
-      <br>
-
-      **Figure 7. LED status on TCP server (IPv6 addressing mode)**
-
-      ![](images/tcp-server-ipv6-output.png)
-
-      <br>
-
-      **Figure 8. LED status on TCP client (IPv6 addressing and STA mode)**
-
-      ![](images/tcp-client-ipv6-output-sta-mode.png)
-
-
-      When the CE is configured in AP and IPv6 mode, the only change from Figure 4 is the IPv6 address being displayed instead of IPv4.
-
-      **Note:** Instead of using the Python TCP server (*tcp_secure_server.py*), you can use the [mtb-example-secure-tcp-server](https://github.com/Infineon/mtb-example-anycloud-secure-tcp-server) example to run as the TCP server on the second kit. See the code example documentation to learn how to use the example.
-
-If you are using the example as the server, the IP address (`TCP_SERVER_IP_ADDRESS`) configured in **Step 6** in the [Operation](#operation) section should be that of the IP address assigned to the kit in the example.
 
 ## Debugging
 
@@ -303,31 +209,13 @@ In this example, the TCP client establishes a secure connection with a TCP serve
 
 <br>
 
-### Creating a self-signed SSL certificate
-
-The TCP client demonstrated in this example uses a self-signed SSL certificate. This requires **OpenSSL** which is already preloaded in the ModusToolbox&trade; software installation. Self-signed SSL certificate means that there is no third-party certificate issuing authority, commonly referred to as CA, involved in the authentication of the client. Servers connecting to the this client must have an exact copy of the SSL certificate to verify the client's identity.
-
-Do the following to generate a self-signed SSL certificate:
-
-#### Generate SSL certificate and private key
-
-1. Run the following commands with a CLI (on Windows, use the command line "modus-shell" program provided in the ModusToolbox&trade; installation instead of a standard Windows command-line application) to generate the SSL certificate and private key.
-
-   ```
-   openssl req -new -newkey rsa:2048 -days 365 -nodes -x509 -keyout client.key -out client.crt
-   ```
-
-2. Follow the instructions in the command window to provide the details required for creating SSL certificate and private key.
-
-The *client.crt* file is your client's certificate and *client.key* is your client's private key.
-
 ## Related resources
 
 
 Resources  | Links
 -----------|----------------------------------
-Application notes  | [AN228571](https://www.cypress.com/AN228571) – Getting started with PSoC&trade; 6 MCU on ModusToolbox&trade; software <br>  [AN215656](https://www.cypress.com/AN215656) – PSoC&trade; 6 MCU: Dual-CPU system design 
-Code examples  | [Using ModusToolbox&trade; software](https://github.com/Infineon/Code-Examples-for-ModusToolbox-Software) on GitHub 
+Application notes  | [AN228571](https://www.cypress.com/AN228571) – Getting started with PSoC&trade; 6 MCU on ModusToolbox&trade; software <br>  [AN215656](https://www.cypress.com/AN215656) – PSoC&trade; 6 MCU: Dual-CPU system design
+Code examples  | [Using ModusToolbox&trade; software](https://github.com/Infineon/Code-Examples-for-ModusToolbox-Software) on GitHub
 Device documentation | [PSoC&trade; 6 MCU datasheets](https://www.cypress.com/search/all?f[0]=meta_type%3Atechnical_documents&f[1]=resource_meta_type%3A575&f[2]=field_related_products%3A114026) <br> [PSoC&trade; 6 technical reference manuals](https://www.cypress.com/search/all/PSoC%206%20Technical%20Reference%20Manual?f[0]=meta_type%3Atechnical_documents&f[1]=resource_meta_type%3A583)
 Development kits | Visit www.cypress.com/microcontrollers-mcus-kits and use the options in the **Select your kit** section to filter kits by *Product family* or *Features*.
 Libraries on GitHub  | [mtb-pdl-cat1](https://github.com/infineon/mtb-pdl-cat1) – PSoC&trade; 6 peripheral driver library (PDL)  <br> [mtb-hal-cat1](https://github.com/infineon/mtb-hal-cat1) – Hardware abstraction layer (HAL) library <br> [retarget-io](https://github.com/infineon/retarget-io) – Utility library to retarget STDIO messages to a UART port
@@ -341,21 +229,6 @@ Tools  | [Eclipse IDE for ModusToolbox&trade; software](https://www.cypress.com/
 Cypress provides a wealth of data at www.cypress.com to help you select the right device, and quickly and effectively integrate it into your design.
 
 For PSoC&trade; 6 MCU devices, see [How to design with PSoC&trade; 6 MCU - KBA223067](https://community.cypress.com/docs/DOC-14644) in the Cypress community.
-
-
-## Document history
-
-Document title: *CE229252* - *Secure TCP client*
-
- Version | Description of change
- ------- | ---------------------
- 1.0.0   | New code example
- 1.1.0   | Updated for ModusToolbox&trade; 2.1. <br>Code updated to use secure sockets and Wi-Fi connection manager libraries.
- 1.2.0   | Makefile updated to sync with BSP changes. <br>Code updated to use binary semaphore.
- 1.3.0   | Updated to add link-local IPv6 support.
- 2.0.0   | Major update to support ModusToolbox&trade; software v2.2, added support for new kits.<br />Added soft AP Wi-Fi interface mode<br /> This version is not backward compatible with ModusToolbox&trade; software v2.1.<br /> Updated to support FreeRTOS v10.3.1
- 2.1.0   | Updated to FreeRTOS v10.4.3 <br> Added support for new kits
- 3.0.0   | Updated to support ModusToolbox™ software v2.4 <br> Added support for new kits <br> Updated the BSPs to v3.X
 
 <br>
 ---------------------------------------------------------

@@ -39,6 +39,8 @@
 #ifndef FREERTOS_CONFIG_H
 #define FREERTOS_CONFIG_H
 
+#include "memfault/ports/freertos_trace.h"
+
 /*-----------------------------------------------------------
  * Application specific definitions.
  *

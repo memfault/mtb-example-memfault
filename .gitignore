@@ -118,6 +118,10 @@ Backup*
 .metadata/
 # .settings/
 
+# A local configuration file that doesn't get committed which can
+# be used to hold local config settings such as wifi ssid and password
+*memfault_example_app_config.h
+
 # Vi and Emacs backup files
 *~
 \#*\#

@@ -48,43 +48,9 @@
 #include <FreeRTOS.h>
 #include <task.h>
 
-/* Secure TCP client task header file. */
-#include "secure_tcp_client.h"
+#include "memfault_example_app.h"
+#include "memfault/components.h"
 
-/* Include serial flash library and QSPI memory configurations only for the
- * kits that require the Wi-Fi firmware to be loaded in external QSPI NOR flash.
- */
-#if defined(TARGET_CY8CPROTO_062S3_4343W)
-#include "cy_serial_flash_qspi.h"
-#include "cycfg_qspi_memslot.h"
-#endif
-
-/******************************************************************************
-* Macros
-******************************************************************************/
-/* RTOS related macros. */
-#define TCP_SECURE_CLIENT_TASK_STACK_SIZE  (5 * 1024)
-#define TCP_SECURE_CLIENT_TASK_PRIORITY    (1)
-
-/******************************************************************************
-* Global Variables
-******************************************************************************/
-
-
-/******************************************************************************
- * Function Name: main
- ******************************************************************************
- * Summary:
- *  System entrance point. This function sets up user tasks and then starts
- *  the RTOS scheduler.
- *
- * Parameters:
- *  void
- *
- * Return:
- *  int
- *
- ******************************************************************************/
 int main()
 {
     cy_rslt_t result;
@@ -92,7 +58,7 @@ int main()
     /* Initialize the board support package */
     result = cybsp_init();
     CY_ASSERT(result == CY_RSLT_SUCCESS);
-    
+
     /* To avoid compiler warnings. */
     (void) result;
 
@@ -117,15 +83,10 @@ int main()
     cy_serial_flash_qspi_enable_xip(true);
     #endif
 
-    /* \x1b[2J\x1b[;H - ANSI ESC sequence to clear screen */
-    printf("\x1b[2J\x1b[;H");
-    printf("===============================================================\n");
-    printf("CE229252 - Secure TCP Client\n");
-    printf("===============================================================\n\n");
-
-    /* Create the tasks */
-    xTaskCreate(tcp_secure_client_task, "Network task", TCP_SECURE_CLIENT_TASK_STACK_SIZE,
-                NULL, TCP_SECURE_CLIENT_TASK_PRIORITY, NULL);
+    /* Initialize Memfault */
+    memfault_platform_boot();
+    memfault_cli_task_start();
+    memfault_http_task_start();
 
     /* Start the FreeRTOS scheduler */
     vTaskStartScheduler();
