@@ -9,6 +9,11 @@ For step by steps on how to integrate the
 [memfault-firmware-sdk](https://github.com/memfault/memfault-firmware-sdk/commits) into your own
 project, see the following guide: https://mflt.io/mtb-integration-guide
 
+This example application was tested with the following setup:
+
+- [PSoC&trade; 62S2 Wi-Fi Bluetooth&reg; pioneer kit](https://www.cypress.com/CY8CKIT-062S2-43012)
+- (`CY8CKIT-062S2-43012`) using GNU Arm® embedded compiler v10.3.1 (`GCC_ARM`)
+
 ## Requirements
 
 - [ModusToolbox&trade; software](https://www.cypress.com/products/modustoolbox-software-environment) v2.4 or later
@@ -16,40 +21,20 @@ project, see the following guide: https://mflt.io/mtb-integration-guide
 - Programming language: C
 - Associated parts: All [PSoC&trade; 6 MCU](https://www.cypress.com/PSoC6) parts
 
-
-## Supported toolchains (make variable 'TOOLCHAIN')
-
-- GNU Arm® embedded compiler v10.3.1 (`GCC_ARM`) - Default value of `TOOLCHAIN`
-- Arm&reg; compiler v6.13 (`ARM`)
-- IAR C/C++ compiler v8.42.2 (`IAR`)
-
-## Supported kits (make variable 'TARGET')
-
-- [PSoC&trade; 6 Wi-Fi Bluetooth® prototyping kit](https://www.cypress.com/CY8CPROTO-062-4343W) (`CY8CPROTO-062-4343W`) – Default value of `TARGET`
-- [PSoC&trade; 6 Wi-Fi Bluetooth&reg; pioneer kit](https://www.cypress.com/CY8CKIT-062-WiFi-BT) (`CY8CKIT-062-WIFI-BT`)
-- [PSoC&trade; 62S2 Wi-Fi Bluetooth&reg; pioneer kit](https://www.cypress.com/CY8CKIT-062S2-43012) (`CY8CKIT-062S2-43012`)
-- [PSoC&trade; 62S1 Wi-Fi Bluetooth&reg; pioneer kit](https://www.cypress.com/CYW9P62S1-43438EVB-01) (`CYW9P62S1-43438EVB-01`)
-- [PSoC&trade; 62S1 Wi-Fi Bluetooth&reg; pioneer kit](https://www.cypress.com/CYW9P62S1-43012EVB-01) (`CYW9P62S1-43012EVB-01`)
-- [PSoC&trade; 62S3 Wi-Fi Bluetooth&reg; prototyping kit](https://www.cypress.com/CY8CPROTO-062S3-4343W) (`CY8CPROTO-062S3-4343W`)
-- [PSoC&trade; 62S2 evaluation kit](https://www.cypress.com/CY8CEVAL-062S2) (`CY8CEVAL-062S2-LAI-4373M2`, `CY8CEVAL-062S2-MUR-43439M2`)
-
 ## Hardware setup
 
 This example uses the board's default configuration. See the kit user guide to ensure that the board is configured correctly.
 
 **Note:** The PSoC&trade; 6 Bluetooth&reg; LE pioneer kit (CY8CKIT-062-BLE) and the PSoC&trade; 6 Wi-Fi Bluetooth&reg; pioneer kit (CY8CKIT-062-WIFI-BT) ship with KitProg2 installed. The ModusToolbox&trade; software requires KitProg3. Before using this code example, make sure that the board is upgraded to KitProg3. The tool and instructions are available in the [Firmware Loader](https://github.com/Infineon/Firmware-loader) GitHub repository. If you do not upgrade, you will see an error like "unable to find CMSIS-DAP device" or "KitProg firmware is out of date".
 
-
 ## Software setup
 
-Install a terminal emulator if you don't have one. Instructions in this document use [Tera Term](https://ttssh2.osdn.jp/index.html.en).
+Install a terminal emulator if you don't have one such as
+[minterm](https://github.com/pyserial/pyserial/blob/master/serial/tools/miniterm.py) or [Tera Term](https://ttssh2.osdn.jp/index.html.en).
 
 Install a Python interpreter if you don't have one. This code example is tested using [Python 3.7.7](https://www.python.org/downloads/release/python-377/).
 
-
 ## Using the code example
-
-
 
 ## Operation
 
@@ -67,7 +52,7 @@ Install a Python interpreter if you don't have one. This code example is tested 
    [source/memfault_example_app.h](source/memfault_example_app.h) file.
 
 4. Build the example application. Using the CLI this can be achieved by running the following from
-the root directory:
+   the root directory:
 
 ```bash
 make getlibs # only needs to be called once
@@ -80,22 +65,25 @@ make build
 
    <details><summary><b>Using Eclipse IDE for ModusToolbox&trade; software</b></summary>
 
-      1. Select the application project in the Project Explorer.
+   1. Select the application project in the Project Explorer.
 
-      2. In the **Quick Panel**, scroll down, and click **\<Application Name> Program (KitProg3_MiniProg4)**.
+   2. In the **Quick Panel**, scroll down, and click **\<Application Name> Program (KitProg3_MiniProg4)**.
    </details>
 
    <details><summary><b>Using CLI</b></summary>
 
-     From the terminal, execute the `make program` command to build and program the application using the default toolchain to the default target. The default toolchain and target are specified in the application's Makefile but you can override those values manually:
-      ```
-      make program TARGET=<BSP> TOOLCHAIN=<toolchain>
-      ```
+   From the terminal, execute the `make program` command to build and program the application using the default toolchain to the default target. The default toolchain and target are specified in the application's Makefile but you can override those values manually:
 
-      Example:
-      ```
-      make program TARGET=CY8CPROTO-062-4343W TOOLCHAIN=GCC_ARM
-      ```
+   ```
+   make program TARGET=<BSP> TOOLCHAIN=<toolchain>
+   ```
+
+   Example:
+
+   ```
+   make program TARGET=CY8CPROTO-062-4343W TOOLCHAIN=GCC_ARM
+   ```
+
       </details>
 
 7. Upload the symbol file to see decoded data on the Memfault web app (upload the .elf file, either via the web app or using the [Memfault CLI tool](https://docs.memfault.com/docs/mcu/symbol-file-build-ids/#upload-symbol-files-cli))
@@ -179,8 +167,8 @@ WHD VERSION      : v2.3.0 : v2.3.0 : GCC 10.3 : 2022-04-13 14:02:24 +0800
 [D] Body: Accepted
 ```
 
-A 1-second timer runs that will attempt to upload any data generated by the Memfault library (core dumps, metrics, etc).
-
+A 1-second timer runs that will attempt to upload any data generated by the Memfault library (core
+dumps, metrics, etc). For more information about how to use the demo CLI, refer to https://mflt.io/demo-cli
 
 ## Debugging
 
@@ -188,18 +176,17 @@ You can debug the example to step through the code. In the IDE, use the **\<Appl
 
 **Note:** **(Only while debugging)** On the CM4 CPU, some code in `main()` may execute before the debugger halts at the beginning of `main()`. This means that some code executes twice – once before the debugger stops execution, and again after the debugger resets the program counter to the beginning of `main()`. See [KBA231071](https://community.cypress.com/docs/DOC-21143) to learn about this and for the workaround.
 
-
 ## Design and implementation
 
 ### Resources and settings
 
 **Table 1. Application resources**
 
- Resource  |  Alias/object     |    Purpose
- :-------- | :-------------    | :------------
- SDIO (HAL) | sdio_obj | SDIO interface for Wi-Fi connectivity
- UART (HAL) |cy_retarget_io_uart_obj| UART HAL object used by retarget-io for debug UART port
- LED (BSP) | CYBSP_USER_LED | User LED to show output
+| Resource   | Alias/object            | Purpose                                                 |
+| :--------- | :---------------------- | :------------------------------------------------------ |
+| SDIO (HAL) | sdio_obj                | SDIO interface for Wi-Fi connectivity                   |
+| UART (HAL) | cy_retarget_io_uart_obj | UART HAL object used by retarget-io for debug UART port |
+| LED (BSP)  | CYBSP_USER_LED          | User LED to show output                                 |
 
 <br>
 

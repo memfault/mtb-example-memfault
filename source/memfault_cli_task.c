@@ -1,6 +1,9 @@
 //! @file
 //!
 //! @brief
+//! This file contains task and functions related to handling IO and executing Memfault demo CLI
+//! commands (https://mflt.io/demo-cli). These commands can be helpful for quickly experimenting
+//! with and testing Memfault functionality
 
 #include "cyhal.h"
 #include "memfault/components.h"

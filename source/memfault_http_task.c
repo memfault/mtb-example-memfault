@@ -1,8 +1,9 @@
 /******************************************************************************
 * File Name:   memfault_http_task.c
 *
-* Description: This file contains task and functions related to secure TCP
-* client operation.
+* Description: This file contains task and functions related to periodically
+* posting diagnostic data collected by the memfault-firmware-sdk to the Memfault cloud
+* using HTTPS
 *
 *******************************************************************************
 * Copyright 2019-2021, Cypress Semiconductor Corporation (an Infineon company) or
@@ -92,7 +93,7 @@ void memfault_http_task(void *arg) {
     CY_ASSERT(0);
   }
 
-  /* Initialize secure socket library. */
+  //! initialize secure socket library
   result = cy_socket_init();
   if (result != CY_RSLT_SUCCESS) {
     MEMFAULT_LOG_ERROR("Secure Socket initialization failed!");

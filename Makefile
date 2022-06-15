@@ -40,7 +40,7 @@ TARGET=CY8CKIT-062S2-43012
 #
 # If APPNAME is edited, ensure to update or regenerate launch
 # configurations for your IDE.
-APPNAME=mtb-example-anycloud-secure-tcp-client
+APPNAME=mtb-example-memfault
 
 # Name of toolchain to use. Options include:
 #

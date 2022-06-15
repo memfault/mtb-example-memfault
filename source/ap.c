@@ -18,11 +18,13 @@
 #include "cy_lwip.h"
 
 #if !defined(WIFI_SSID)
-#error "#define WIFI_SSID must be specified in source/memfault_example_app.h"
+#warning "WIFI_SSID should be defined in source/memfault_example_app.h"
+#define WIFI_SSID ""
 #endif
 
 #if !defined(WIFI_PASSWORD)
-#error "WIFI_PASSWORD must be specified in source/memfault_example_app.h"
+#warning "WIFI_PASSWORD should be defined in source/memfault_example_app.h"
+#define WIFI_PASSWORD ""
 #endif
 
 #define WIFI_SECURITY_TYPE                         CY_WCM_SECURITY_WPA2_MIXED_PSK

@@ -19,7 +19,8 @@
 #include "cy_device_headers.h"
 
 #if !defined(MEMFAULT_PROJECT_KEY)
-#error "#define MEMFAULT_PROJECT_KEY must be specified in source/memfault_example_app.h. Navigate to https://mflt.io/project-key to generate one"
+#warning "#define MEMFAULT_PROJECT_KEY must be specified in source/memfault_example_app.h. Navigate to https://mflt.io/project-key to generate one"
+#define MEMFAULT_PROJECT_KEY ""
 #endif
 
 sMfltHttpClientConfig g_mflt_http_client_config = {
