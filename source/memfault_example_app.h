@@ -33,3 +33,8 @@ void memfault_http_task(void *arg);
 //!
 //! @return CY_RSLT_SUCCESS if connection succeeded, else error code
 cy_rslt_t connect_to_wifi_ap(void);
+
+//! Attempts to connect to a Wifi AP
+//!
+//! @return CY_RSLT_SUCCESS if connection succeeded, else error code
+cy_rslt_t boot_wifi_subsystem(void);

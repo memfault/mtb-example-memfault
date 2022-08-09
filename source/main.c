@@ -40,9 +40,10 @@
 *******************************************************************************/
 
 /* Header file includes */
-#include "cyhal.h"
-#include "cybsp.h"
+#include "cy_log.h"
 #include "cy_retarget_io.h"
+#include "cybsp.h"
+#include "cyhal.h"
 
 /* FreeRTOS header file */
 #include <FreeRTOS.h>
@@ -82,6 +83,9 @@ int main()
 
     cy_serial_flash_qspi_enable_xip(true);
     #endif
+
+    /* Enable logging */
+    result = cy_log_init(CY_LOG_INFO, NULL, NULL);
 
     /* Initialize Memfault */
     memfault_platform_boot();

@@ -68,6 +68,7 @@
 #include <inttypes.h>
 
 #include "memfault/components.h"
+#include "memfault_psoc6_port.h"
 
 #if !defined(MEMFAULT_POST_SEND_INTERVAL_MS)
 #define MEMFAULT_POST_SEND_INTERVAL_MS              (60 * 1000)
@@ -87,6 +88,9 @@ void memfault_http_task(void *arg) {
     CY_ASSERT(0);
   }
   MEMFAULT_LOG_INFO("Wi-Fi Connection Manager initialized.");
+
+  // Note: Must be called after cy_wcm_init()
+  memfault_wcm_metrics_boot();
 
   if (connect_to_wifi_ap() != CY_RSLT_SUCCESS) {
     MEMFAULT_LOG_ERROR("Failed to connect to Wi-Fi AP");

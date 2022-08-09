@@ -108,6 +108,9 @@ ifeq ($(TARGET), CY8CPROTO-062-4343W)
 DEFINES+=CY_WIFI_HOST_WAKE_SW_FORCE=0
 endif
 
+# Enable debug logs for better visbility into Wi-Fi subsystem
+DEFINES+=ENABLE_WCM_LOGS
+
 # Select softfp or hardfp floating point. Default is softfp.
 VFP_SELECT=
 
