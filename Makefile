@@ -7,26 +7,21 @@
 #
 ################################################################################
 # \copyright
-# Copyright 2018-2021, Cypress Semiconductor Corporation (an Infineon company)
-# SPDX-License-Identifier: Apache-2.0
-#
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-#
-#     http://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
+# $ Copyright 2018-2022 Cypress Semiconductor Apache2 $
 ################################################################################
 
 
 ################################################################################
 # Basic Configuration
 ################################################################################
+
+#Type of MTB Makefile Options include:
+#
+#COMBINED    -- Top Level Makefile usually for single standalone application
+#APPLICATION -- Top Level Common Makefile usually for multi-project in application
+#PROJECT     -- Project Makefile for each project under Application
+#
+MTB_TYPE=COMBINED
 
 # Target board/hardware (BSP).
 # To change the target, it is recommended to use the Library manager
@@ -100,13 +95,15 @@ MBEDTLSFLAGS = MBEDTLS_USER_CONFIG_FILE='"mbedtls_user_config.h"'
 # Add additional defines to the build process (without a leading -D).
 DEFINES=$(MBEDTLSFLAGS) CYBSP_WIFI_CAPABLE CY_RETARGET_IO_CONVERT_LF_TO_CRLF CY_RTOS_AWARE
 
-# CY8CPROTO-062-4343W board shares the same GPIO for the user button (SW2)
-# and the CYW4343W host wake up pin. Since this example uses the GPIO for
+# CY8CPROTO-062-4343W board shares the same GPIO for the user button (USER BTN1)
+# and the CYW4343W host wake up pin. Since this example can use the GPIO for  
 # interfacing with the user button, the SDIO interrupt to wake up the host is
 # disabled by setting CY_WIFI_HOST_WAKE_SW_FORCE to '0'.
-ifeq ($(TARGET), CY8CPROTO-062-4343W)
+# 
+# If you want the host wake up feature on CY8CPROTO-062-4343W board, change the GPIO pin 
+# for USER BTN in design/hardware & comment the below DEFINES line. For other
+# targets commenting the below DEFINES line is sufficient.
 DEFINES+=CY_WIFI_HOST_WAKE_SW_FORCE=0
-endif
 
 # Enable debug logs for better visbility into Wi-Fi subsystem
 DEFINES+=ENABLE_WCM_LOGS
@@ -144,13 +141,22 @@ LINKER_SCRIPT=
 # Custom pre-build commands to run.
 PREBUILD=
 
-# Custom post-build commands to run.
-POSTBUILD=python -m mflt_build_id.__init__ $(CY_OPENOCD_SYMBOL_IMG)
-
-ifeq ($(TARGET), CY8CPROTO-062S3-4343W)
-DEFINES+=CY_ENABLE_XIP_PROGRAM
-DEFINES+=CY_STORAGE_WIFI_DATA=\".cy_xip\"
+# Python path definition
+ifeq ($(OS),Windows_NT)
+PYTHON_PATH?=python
+else
+PYTHON_PATH?=python3
 endif
+
+# Path to the symbol file
+CY_OPENOCD_SYMBOL_IMG=$(MTB_TOOLS__OUTPUT_CONFIG_DIR)/$(APPNAME).elf
+
+# Custom post-build commands to run.
+POSTBUILD=$(PYTHON_PATH) -m mflt_build_id.__init__ $(CY_OPENOCD_SYMBOL_IMG)
+
+# If you want the XIP feature enabled on the target uncomment this.
+#DEFINES+=CY_ENABLE_XIP_PROGRAM
+#DEFINES+=CY_STORAGE_WIFI_DATA=\".cy_xip\"
 
 ################################################################################
 # Paths

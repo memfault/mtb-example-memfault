@@ -61,8 +61,8 @@
 #include "cy_wcm.h"
 #include "cy_wcm_error.h"
 
-/* lwIP related header files. */
-#include "cy_lwip.h"
+/* IP address related header files (part of the lwIP TCP/IP stack). */
+#include "ip_addr.h"
 
 /* to use the portable formatting macros */
 #include <inttypes.h>
