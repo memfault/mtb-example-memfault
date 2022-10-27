@@ -7,20 +7,7 @@
 #
 ################################################################################
 # \copyright
-# Copyright 2018-2021, Cypress Semiconductor Corporation (an Infineon company)
-# SPDX-License-Identifier: Apache-2.0
-#
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-#
-#     http://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
+# $ Copyright 2018-YEAR Cypress Semiconductor Apache2 $
 ################################################################################
 
 
@@ -28,13 +15,24 @@
 # Basic Configuration
 ################################################################################
 
+#Type of MTB Makefile Options include:
+#
+#COMBINED    -- Top Level Makefile usually for single standalone application
+#APPLICATION -- Top Level Common Makefile usually for multi-project in application
+#PROJECT     -- Project Makefile for each project under Application
+#
+MTB_TYPE=COMBINED
+
 # Target board/hardware (BSP).
 # To change the target, it is recommended to use the Library manager
 # ('make modlibs' from command line), which will also update Eclipse IDE launch
 # configurations. If TARGET is manually edited, ensure TARGET_<BSP>.mtb with a
 # valid URL exists in the application, run 'make getlibs' to fetch BSP contents
 # and update or regenerate launch configurations for your IDE.
-TARGET=CY8CKIT-062S2-43012
+TARGET=APP_CY8CKIT-062S2-43012
+
+# Rename TARGET to remove "APP_" prefix
+RENAMED_TARGET=$(subst APP_,,$(TARGET))
 
 # Name of application (used to derive name of final linked file).
 #
@@ -104,7 +102,7 @@ DEFINES=$(MBEDTLSFLAGS) CYBSP_WIFI_CAPABLE CY_RETARGET_IO_CONVERT_LF_TO_CRLF CY_
 # and the CYW4343W host wake up pin. Since this example uses the GPIO for
 # interfacing with the user button, the SDIO interrupt to wake up the host is
 # disabled by setting CY_WIFI_HOST_WAKE_SW_FORCE to '0'.
-ifeq ($(TARGET), CY8CPROTO-062-4343W)
+ifeq ($(RENAMED_TARGET), CY8CPROTO-062-4343W)
 DEFINES+=CY_WIFI_HOST_WAKE_SW_FORCE=0
 endif
 
@@ -144,10 +142,20 @@ LINKER_SCRIPT=
 # Custom pre-build commands to run.
 PREBUILD=
 
-# Custom post-build commands to run.
-POSTBUILD=python -m mflt_build_id.__init__ $(CY_OPENOCD_SYMBOL_IMG)
+# Python path definition
+ifeq ($(OS),Windows_NT)
+PYTHON_PATH?=python
+else
+PYTHON_PATH?=python3
+endif
 
-ifeq ($(TARGET), CY8CPROTO-062S3-4343W)
+# Path to the symbol file
+CY_OPENOCD_SYMBOL_IMG=./build/$(TARGET)/$(CONFIG)/$(APPNAME).elf
+
+# Custom post-build commands to run.
+POSTBUILD=$(PYTHON_PATH) -m mflt_build_id.__init__ $(CY_OPENOCD_SYMBOL_IMG)
+
+ifeq ($(RENAMED_TARGET), CY8CPROTO-062S3-4343W)
 DEFINES+=CY_ENABLE_XIP_PROGRAM
 DEFINES+=CY_STORAGE_WIFI_DATA=\".cy_xip\"
 endif
