@@ -7,11 +7,11 @@
 
 #include "cyhal.h"
 
-#define WIFI_SSID "dk_iphone"
-#define WIFI_PASSWORD "#22dheeraj"
+// #define WIFI_SSID "FILLMEIN"
+// #define WIFI_PASSWORD "FILLMEIN"
 
 // Get a project key from: https://mflt.io/project-key
-#define MEMFAULT_PROJECT_KEY "YbCwylbfbdEOYxy2j09FIqZKUX0lqYfd"
+// #define MEMFAULT_PROJECT_KEY "YOUR_PROJECT_KEY"
 
 #if defined(__has_include) && __has_include("memfault_example_app_config.h")
 #include "memfault_example_app_config.h"
