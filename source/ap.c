@@ -15,7 +15,8 @@
 #include "cy_wcm.h"
 #include "cy_wcm_error.h"
 
-#include "cy_lwip.h"
+/* IP address related header files (part of the lwIP TCP/IP stack). */
+#include "ip_addr.h"
 
 #if !defined(WIFI_SSID)
 #warning "WIFI_SSID should be defined in source/memfault_example_app.h"
