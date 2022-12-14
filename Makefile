@@ -148,11 +148,8 @@ else
 PYTHON_PATH?=python3
 endif
 
-# Path to the symbol file
-CY_OPENOCD_SYMBOL_IMG=$(MTB_TOOLS__OUTPUT_CONFIG_DIR)/$(APPNAME).elf
-
 # Custom post-build commands to run.
-POSTBUILD=$(PYTHON_PATH) -m mflt_build_id.__init__ $(CY_OPENOCD_SYMBOL_IMG)
+POSTBUILD=
 
 # If you want the XIP feature enabled on the target uncomment this.
 #DEFINES+=CY_ENABLE_XIP_PROGRAM
@@ -211,3 +208,21 @@ endif
 $(info Tools Directory: $(CY_TOOLS_DIR))
 
 include $(CY_TOOLS_DIR)/make/start.mk
+
+# Note these must be placed after including the MTB make files as those files define
+# many variables used to define memfault_post_build
+
+# Target/symbol file of the app
+APP_TARGET_FILE=$(MTB_TOOLS__OUTPUT_CONFIG_DIR)/$(APPNAME).$(MTB_RECIPE__SUFFIX_TARGET)
+# Program/hex file of the app
+APP_PROGRAM_FILE=$(MTB_TOOLS__OUTPUT_CONFIG_DIR)/$(APPNAME).$(MTB_RECIPE__SUFFIX_PROGRAM)
+
+# Add additional dependency to hex file to ensure mflt_build_id runs before it is built
+$(APP_PROGRAM_FILE): memfault_post_build
+
+# Custom target to run mflt_build_id after target file is built but before program file
+# is built to ensure correct build ID is included.
+memfault_post_build: $(APP_TARGET_FILE)
+	$(PYTHON_PATH) -m mflt_build_id.__init__ $(APP_TARGET_FILE)
+
+.PHONY: memfault_post_build
