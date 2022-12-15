@@ -5,16 +5,99 @@
 //! commands (https://mflt.io/demo-cli). These commands can be helpful for quickly experimenting
 //! with and testing Memfault functionality
 
-#include "cyhal.h"
-#include "memfault/components.h"
-
-#include "cy_retarget_io.h"
-
 #include <FreeRTOS.h>
 #include <task.h>
 
+#include "ap.h"
+#include "app_kvstore.h"
+#include "cy_retarget_io.h"
+#include "cyhal.h"
+#include "memfault/components.h"
+#include "memfault_example_app.h"
+
 #define MEMFAULT_CLI_TASK_SIZE (1024)
 #define MEMFAULT_CLI_TASK_PRIORITY (1)
+#define MAX_WIFI_CONN_RETRIES (5u)
+
+// Helper functions to drive wifi commands
+static int prv_join_wifi_cmd(int argc, char *argv[]);
+static int prv_save_wifi_cmd(int argc, char *argv[]);
+static int prv_scan_wifi_cmd(int argc, char *argv[]);
+
+static const sMemfaultShellCommand s_memfault_shell_commands[] = {
+  {"clear_core", memfault_demo_cli_cmd_clear_core, "Clear an existing coredump"},
+  {"drain_chunks", memfault_demo_drain_chunk_data,
+   "Flushes queued Memfault data. To upload data see https://mflt.io/posting-chunks-with-gdb"},
+  {"export", memfault_demo_cli_cmd_export,
+   "Export base64-encoded chunks. To upload data see https://mflt.io/chunk-data-export"},
+  {"get_core", memfault_demo_cli_cmd_get_core, "Get coredump info"},
+  {"get_device_info", memfault_demo_cli_cmd_get_device_info, "Get device info"},
+
+  //
+  // Test commands for validating SDK functionality: https://mflt.io/mcu-test-commands
+  //
+
+  {"test_assert", memfault_demo_cli_cmd_assert, "Trigger memfault assert"},
+
+#if MEMFAULT_COMPILER_ARM
+  {"test_busfault", memfault_demo_cli_cmd_busfault, "Trigger a busfault"},
+  {"test_hardfault", memfault_demo_cli_cmd_hardfault, "Trigger a hardfault"},
+  {"test_memmanage", memfault_demo_cli_cmd_memmanage, "Trigger a memory management fault"},
+  {"test_usagefault", memfault_demo_cli_cmd_usagefault, "Trigger a usage fault"},
+#endif
+
+  {"test_log", memfault_demo_cli_cmd_test_log, "Writes test logs to log buffer"},
+  {"test_log_capture", memfault_demo_cli_cmd_trigger_logs,
+   "Trigger capture of current log buffer contents"},
+  {"test_reboot", memfault_demo_cli_cmd_system_reboot,
+   "Force system reset and track it with a trace event"},
+  {"test_trace", memfault_demo_cli_cmd_trace_event_capture, "Capture an example trace event"},
+  {"wifi_join", prv_join_wifi_cmd, "Join a WiFi network"},
+  {"wifi_save", prv_save_wifi_cmd, "Save WiFi network info to auto-join at boot"},
+  {"wifi_scan", prv_scan_wifi_cmd,
+   "Scan available networks, reports network name and security type"},
+  {"help", memfault_shell_help_handler, "Lists all commands"},
+};
+
+const sMemfaultShellCommand *const g_memfault_shell_commands = s_memfault_shell_commands;
+const size_t g_memfault_num_shell_commands = MEMFAULT_ARRAY_SIZE(s_memfault_shell_commands);
+
+// Joins a WiFi network
+static int prv_join_wifi_cmd(int argc, char *argv[]) {
+  if (argc < 4) {
+    MEMFAULT_LOG_ERROR("Usage: wifi_join <SSID> <AUTH_TYPE> <PASSWORD>");
+    return -1;
+  }
+
+  return connect_to_wifi_ap(argv[1], argv[2], argv[3], MAX_WIFI_CONN_RETRIES);
+}
+
+// Scans for available WiFi networks
+static int prv_scan_wifi_cmd(int argc, char *argv[]) {
+  MEMFAULT_LOG_INFO("#### Scan Results ####\n\n");
+  MEMFAULT_LOG_INFO("SSID                 Security Type  RSSI(dBm)  Channel BSSID\n");
+
+  return scan_wifi_ap();
+}
+
+// Saves WiFi network config to app kv-store
+static int prv_save_wifi_cmd(int argc, char *argv[]) {
+  if (argc < 4) {
+    MEMFAULT_LOG_ERROR("Usage: wifi_save <SSID> <AUTH_TYPE> <PASSWORD>");
+    return -1;
+  }
+
+  size_t len = strnlen(argv[1], MEMFAULT_WIFI_CONFIG_MAX_SIZE);
+  app_kvstore_write(MEMFAULT_WIFI_SSID_KEY, (uint8_t *)argv[1], len);
+
+  len = strnlen(argv[2], MEMFAULT_WIFI_CONFIG_MAX_SIZE);
+  app_kvstore_write(MEMFAULT_WIFI_AUTH_TYPE_KEY, (uint8_t *)argv[2], len);
+
+  len = strnlen(argv[3], MEMFAULT_WIFI_CONFIG_MAX_SIZE);
+  app_kvstore_write(MEMFAULT_WIFI_PASSWORD_KEY, (uint8_t *)argv[3], len);
+
+  return 0;
+}
 
 static int prv_send_char(char c) {
   cyhal_uart_putc(&cy_retarget_io_uart_obj, c);

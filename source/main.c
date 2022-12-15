@@ -49,8 +49,9 @@
 #include <FreeRTOS.h>
 #include <task.h>
 
-#include "memfault_example_app.h"
+#include "app_kvstore.h"
 #include "memfault/components.h"
+#include "memfault_example_app.h"
 
 int main()
 {
@@ -86,6 +87,7 @@ int main()
 
     /* Enable logging */
     result = cy_log_init(CY_LOG_INFO, NULL, NULL);
+    app_kvstore_init();
 
     /* Initialize Memfault */
     memfault_platform_boot();

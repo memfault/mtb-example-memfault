@@ -47,6 +47,9 @@ Install the Python package `mflt_build_id` in your Python system packages.
    1. Modify the `WIFI_SSID`, `WIFI_PASSWORD` macros to match that of the Wi-Fi network credentials
       that you want to connect to. These macros are defined in the
       [source/memfault_example_app.h](source/memfault_example_app.h) file.
+   2. (Optional) If compile-time configuration is not available, the commands `wifi_scan`, `wifi_join`,
+      `wifi_save` are provided to scan for networks, join a found network, and save a network for
+      auto-conneciton at boot.
 
 3. If you already have a Memfault account, navigate [here](https://mflt.io/project-key) to create a
    project key. (If you do not have an account sign up for a Memfault account

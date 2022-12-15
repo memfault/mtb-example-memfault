@@ -5,9 +5,12 @@
 //! @brief
 //! Helpers for setting up the Memfault example app environment
 
+#include "cy_wcm.h"
 #include "cyhal.h"
 
 // #define WIFI_SSID "FILLMEIN"
+//! Please see "wifi_utils_str_to_authtype" for string examples
+// #define WIFI_AUTH_TYPE "FILLMEIN"
 // #define WIFI_PASSWORD "FILLMEIN"
 
 // Get a project key from: https://mflt.io/project-key
@@ -28,13 +31,3 @@ void memfault_http_task_start(void);
 
 //! Task responsible for posting data to Memfault
 void memfault_http_task(void *arg);
-
-//! Attempts to connect to a Wifi AP
-//!
-//! @return CY_RSLT_SUCCESS if connection succeeded, else error code
-cy_rslt_t connect_to_wifi_ap(void);
-
-//! Attempts to connect to a Wifi AP
-//!
-//! @return CY_RSLT_SUCCESS if connection succeeded, else error code
-cy_rslt_t boot_wifi_subsystem(void);

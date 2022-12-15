@@ -40,11 +40,6 @@
 
 #include "memfault_example_app.h"
 
-/* Header file includes. */
-#include "cyhal.h"
-#include "cybsp.h"
-#include "cy_retarget_io.h"
-
 /* FreeRTOS header file. */
 #include <FreeRTOS.h>
 #include <task.h>
@@ -67,6 +62,8 @@
 /* to use the portable formatting macros */
 #include <inttypes.h>
 
+#include "ap.h"
+#include "app_kvstore.h"
 #include "memfault/components.h"
 #include "memfault_psoc6_port.h"
 
@@ -74,10 +71,76 @@
 #define MEMFAULT_POST_SEND_INTERVAL_MS              (60 * 1000)
 #endif
 
+#if !defined(WIFI_SSID)
+  #warning "WIFI_SSID should be defined in source/memfault_example_app.h"
+  #define WIFI_SSID ""
+#endif
+
+#if !defined(WIFI_AUTH_TYPE)
+  #warning "WIFI_AUTH_TYPE should be defined in source/memfault_example_app.h"
+  #define WIFI_AUTH_TYPE ""
+#endif
+
+#if !defined(WIFI_PASSWORD)
+  #warning "WIFI_PASSWORD should be defined in source/memfault_example_app.h"
+  #define WIFI_PASSWORD ""
+#endif
+
 #define MEMFAULT_HTTP_TASK_SIZE (5 * 1024)
 #define MEMFAULT_HTTP_TASK_PRIORITY (1)
 
-void memfault_http_task(void *arg) {
+//! Helper function to load saved WiFi AP config from the app kv-store
+static bool load_saved_wifi_config(char *ssid, char *auth_type, char *password) {
+  if (!app_kvstore_key_exists(MEMFAULT_WIFI_SSID_KEY) ||
+      !app_kvstore_key_exists(MEMFAULT_WIFI_AUTH_TYPE_KEY) ||
+      !app_kvstore_key_exists(MEMFAULT_WIFI_PASSWORD_KEY)) {
+    return false;
+  }
+
+  uint32_t size = MEMFAULT_WIFI_CONFIG_MAX_SIZE;
+  app_kvstore_read(MEMFAULT_WIFI_SSID_KEY, (uint8_t *)ssid, &size);
+
+  size = MEMFAULT_WIFI_CONFIG_MAX_SIZE;
+  app_kvstore_read(MEMFAULT_WIFI_AUTH_TYPE_KEY, (uint8_t *)auth_type, &size);
+
+  size = MEMFAULT_WIFI_CONFIG_MAX_SIZE;
+  app_kvstore_read(MEMFAULT_WIFI_PASSWORD_KEY, (uint8_t *)password, &size);
+
+  return true;
+}
+
+//! Helper function to auto connect to a saved WiFi AP config
+//!
+//! 1. Use config in Flash k-v store
+//! 2. Use config in compile-time definitions
+//! 3. Skip auto connect
+static void prv_auto_connect_to_ap(void) {
+  // Attempt to connect to a saved wifi configuration
+  char ssid[MEMFAULT_WIFI_CONFIG_MAX_SIZE] = {0};
+  char auth_type[MEMFAULT_WIFI_CONFIG_MAX_SIZE] = {0};
+  char password[MEMFAULT_WIFI_CONFIG_MAX_SIZE] = {0};
+
+  if (load_saved_wifi_config(ssid, auth_type, password)) {
+    if (connect_to_wifi_ap(ssid, auth_type, password, 2) != CY_RSLT_SUCCESS) {
+      MEMFAULT_LOG_ERROR("Failed to connect to Wi-Fi AP w/ saved config");
+    }
+  } else if (strnlen(WIFI_SSID, MEMFAULT_WIFI_CONFIG_MAX_SIZE) > 0 &&
+             strnlen(WIFI_AUTH_TYPE, MEMFAULT_WIFI_CONFIG_MAX_SIZE) > 0 &&
+             strnlen(WIFI_PASSWORD, MEMFAULT_WIFI_CONFIG_MAX_SIZE) > 0) {
+    if (connect_to_wifi_ap(WIFI_SSID, WIFI_AUTH_TYPE, WIFI_PASSWORD, 2) != CY_RSLT_SUCCESS) {
+      MEMFAULT_LOG_ERROR("Failed to connect to Wi-Fi AP w/ compile-time config");
+    }
+  } else {
+    MEMFAULT_LOG_DEBUG("No saved wifi configuration found");
+  }
+}
+
+//! Helper function to perform initialization of WCM and related components
+//!
+//! After initializing WCM, function then:
+//! * Attempts auto-connection
+//! * Initializes socket and TLS cert components
+static cy_rslt_t boot_wifi_subsystem(void) {
   cy_wcm_config_t wifi_config = {
     .interface = CY_WCM_INTERFACE_TYPE_STA
   };
@@ -92,10 +155,7 @@ void memfault_http_task(void *arg) {
   // Note: Must be called after cy_wcm_init()
   memfault_wcm_metrics_boot();
 
-  if (connect_to_wifi_ap() != CY_RSLT_SUCCESS) {
-    MEMFAULT_LOG_ERROR("Failed to connect to Wi-Fi AP");
-    CY_ASSERT(0);
-  }
+  prv_auto_connect_to_ap();
 
   //! initialize secure socket library
   result = cy_socket_init();
@@ -113,8 +173,11 @@ void memfault_http_task(void *arg) {
     MEMFAULT_LOG_INFO("Global trusted RootCA certificate loaded");
   }
 
-  // post any data available at boot up
-  memfault_http_client_post_chunk();
+  return result;
+}
+
+void memfault_http_task(void *arg) {
+  boot_wifi_subsystem();
 
   while (1) {
     // Periodically attempt to post data
