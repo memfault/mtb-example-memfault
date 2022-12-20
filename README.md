@@ -65,6 +65,8 @@ Install the Python package `mflt_build_id` in your Python system packages.
    3. Select Memfault Network Example from the Wi-Fi section
    4. After the application is created, with the application selected in the projects panel, click Build Application from the Quick Panel
 
+   </details>
+
    <details><summary><b>Using CLI</b></summary>
 
    1. Clone the application to your workspace.
@@ -76,6 +78,8 @@ Install the Python package `mflt_build_id` in your Python system packages.
    make build
    ```
 
+   </details>
+
 5. Open a terminal program and select the KitProg3 COM port. Set the serial port parameters to 8N1 and 115200 baud.
 
 6. Program the board using one of the following:
@@ -85,6 +89,7 @@ Install the Python package `mflt_build_id` in your Python system packages.
    1. Select the application project in the Project Explorer.
 
    2. In the **Quick Panel**, scroll down, and click **\<Application Name> Program (KitProg3_MiniProg4)**.
+
    </details>
 
    <details><summary><b>Using CLI</b></summary>
@@ -101,7 +106,7 @@ Install the Python package `mflt_build_id` in your Python system packages.
    make program TARGET=CY8CPROTO-062-4343W TOOLCHAIN=GCC_ARM
    ```
 
-      </details>
+   </details>
 
 7. Upload the symbol file to see decoded data on the Memfault web app (upload the .elf file, either via the web app or using the [Memfault CLI tool](https://docs.memfault.com/docs/mcu/symbol-file-build-ids/#upload-symbol-files-cli))
 
