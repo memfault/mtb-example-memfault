@@ -90,6 +90,7 @@ int main()
     app_kvstore_init();
 
     /* Initialize Memfault */
+    memfault_platform_init_serial_number();
     memfault_platform_boot();
     memfault_cli_task_start();
     memfault_http_task_start();
