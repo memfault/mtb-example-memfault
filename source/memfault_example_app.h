@@ -31,3 +31,6 @@ void memfault_http_task_start(void);
 
 //! Task responsible for posting data to Memfault
 void memfault_http_task(void *arg);
+
+//! Call once on boot to initialize the device serial
+void memfault_platform_init_serial_number(void);

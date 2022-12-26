@@ -53,7 +53,8 @@
 #include "memfault/components.h"
 #include "memfault_example_app.h"
 
-int main()
+__attribute__((noreturn))
+int main(void)
 {
     cy_rslt_t result;
 
@@ -90,6 +91,7 @@ int main()
     app_kvstore_init();
 
     /* Initialize Memfault */
+    memfault_platform_init_serial_number();
     memfault_platform_boot();
     memfault_cli_task_start();
     memfault_http_task_start();
