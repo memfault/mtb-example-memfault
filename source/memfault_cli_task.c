@@ -12,6 +12,7 @@
 #include "app_kvstore.h"
 #include "cy_retarget_io.h"
 #include "cyhal.h"
+#include "cyhal_gpio.h"
 #include "memfault/components.h"
 #include "memfault_example_app.h"
 
@@ -104,6 +105,38 @@ static int prv_send_char(char c) {
   return 0;
 }
 
+// https://infineon.github.io/TARGET_CY8CKIT-062S2-43012/html/group__group__bsp__pins__btn.html
+#define CYBSP_USER_BTN1 (P0_4)
+#define CYBSP_USER_BTN2 (P1_4)
+
+static void prv_init_user_buttons(void) {
+  cyhal_gpio_init(CYBSP_USER_BTN1, CYHAL_GPIO_DIR_INPUT, CYHAL_GPIO_DRIVE_PULLUP, 1);
+  cyhal_gpio_init(CYBSP_USER_BTN2, CYHAL_GPIO_DIR_INPUT, CYHAL_GPIO_DRIVE_PULLUP, 1);
+}
+
+static void prv_check_user_buttons(void) {
+  // debounce- only enable these operations 2 seconds after boot
+  if (memfault_platform_get_time_since_boot_ms() < (2*1000)) {
+    return;
+  }
+
+  if (cyhal_gpio_read(CYBSP_USER_BTN1) == 0) {
+    MEMFAULT_LOG_INFO("User button 1 pressed, crashing!");
+    vTaskDelay(250);
+
+    // trigger a hard fault
+    volatile uint32_t *p = (uint32_t *)0x00000000;
+    *p = 0x12345678;
+  }
+  if (cyhal_gpio_read(CYBSP_USER_BTN2) == 0) {
+    MEMFAULT_LOG_INFO("User button 2 pressed, asserting!");
+    vTaskDelay(250);
+
+    // trigger an assert
+    MEMFAULT_ASSERT(0);
+  }
+}
+
 void memfault_cli_task(void *arg) {
   cyhal_syspm_lock_deepsleep();
   const sMemfaultShellImpl impl = {
@@ -112,6 +145,7 @@ void memfault_cli_task(void *arg) {
   memfault_demo_shell_boot(&impl);
 
   while (1) {
+    prv_check_user_buttons();
     uint32_t num_bytes = cyhal_uart_readable(&cy_retarget_io_uart_obj);
     if (num_bytes < 1) {
       // Sleep for a little bit if there was not data
@@ -133,6 +167,8 @@ void memfault_cli_task(void *arg) {
 }
 
 void memfault_cli_task_start(void) {
+  prv_init_user_buttons();
+
   xTaskCreate(memfault_cli_task, "MFLT CLI", MEMFAULT_CLI_TASK_SIZE,
               NULL, MEMFAULT_CLI_TASK_PRIORITY, NULL);
 }

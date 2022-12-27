@@ -53,7 +53,8 @@
 #include "memfault/components.h"
 #include "memfault_example_app.h"
 
-int main()
+__attribute__((noreturn))
+int main(void)
 {
     cy_rslt_t result;
 
