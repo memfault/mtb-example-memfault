@@ -14,12 +14,12 @@ https://mflt.io/mtb-integration-guide
 
 This example application was tested with the following setup:
 
-- [PSoC™ 62S2 Wi-Fi Bluetooth®; pioneer kit](https://www.cypress.com/CY8CKIT-062S2-43012)
+- [PSoC™ 62S2 Wi-Fi Bluetooth® pioneer kit](https://www.cypress.com/CY8CKIT-062S2-43012)
 - (`CY8CKIT-062S2-43012`) using GNU Arm® embedded compiler v10.3.1 (`GCC_ARM`)
 
 ## Requirements
 
-- [ModusToolbox™; software](https://www.infineon.com/cms/en/design-support/tools/sdk/modustoolbox-software/)
+- [ModusToolbox™ software](https://www.infineon.com/cms/en/design-support/tools/sdk/modustoolbox-software/)
   v3.0 or later (tested with v3.0)
 - PSoC™ 6 Board support package (BSP) minimum required version: 4.0.0
 - Programming language: C
@@ -31,9 +31,9 @@ This example application was tested with the following setup:
 This example uses the board's default configuration. See the kit user guide to
 ensure that the board is configured correctly.
 
-**Note:** The PSoC™ 6 Bluetooth®; LE pioneer kit (CY8CKIT-062-BLE) and the
-PSoC™ 6 Wi-Fi Bluetooth®; pioneer kit (CY8CKIT-062-WIFI-BT) ship with KitProg2
-installed. The ModusToolbox™; software requires KitProg3. Before using this code
+**Note:** The PSoC™ 6 Bluetooth® LE pioneer kit (CY8CKIT-062-BLE) and the
+PSoC™ 6 Wi-Fi Bluetooth® pioneer kit (CY8CKIT-062-WIFI-BT) ship with KitProg2
+installed. The ModusToolbox™ software requires KitProg3. Before using this code
 example, make sure that the board is upgraded to KitProg3. The tool and
 instructions are available in the
 [Firmware Loader](https://github.com/Infineon/Firmware-loader) GitHub
@@ -76,7 +76,7 @@ Install the Python package `mflt_build_id` in your Python system packages.
 
 4. Setup up the application using one of the following:
 
-   <details><summary><b>Using Eclipse IDE for ModusToolbox™; software</b></summary>
+   <details><summary><b>Using Eclipse IDE for ModusToolbox™ software</b></summary>
 
    1. Select New Application from the Quick Panel
    2. Select your board
@@ -114,7 +114,7 @@ Install the Python package `mflt_build_id` in your Python system packages.
 
 6. Program the board using one of the following:
 
-   <details><summary><b>Using Eclipse IDE for ModusToolbox™; software</b></summary>
+   <details><summary><b>Using Eclipse IDE for ModusToolbox™ software</b></summary>
 
    1. Select the application project in the Project Explorer.
 
@@ -238,7 +238,7 @@ use the demo CLI, refer to https://mflt.io/demo-cli
 You can debug the example to step through the code. In the IDE, use the
 **\<Application Name> Debug (KitProg3_MiniProg4)** configuration in the **Quick
 Panel**. For details, see the "Program and debug" section in the
-[Eclipse IDE for ModusToolbox™; software user guide](https://www.cypress.com/MTBEclipseIDEUserGuide).
+[Eclipse IDE for ModusToolbox™ software user guide](https://www.cypress.com/MTBEclipseIDEUserGuide).
 
 **Note:** **(Only while debugging)** On the CM4 CPU, some code in `main()` may
 execute before the debugger halts at the beginning of `main()`. This means that
@@ -278,12 +278,12 @@ command received from the TCP server.
 
 | Resources            | Links                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           |
 | -------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Application notes    | [AN228571](https://www.infineon.com/dgdl/Infineon-AN228571_Getting_started_with_PSoC_6_MCU_on_ModusToolbox_software-ApplicationNotes-v06_00-EN.pdf?fileId=8ac78c8c7cdc391c017d0d36de1f66d1&utm_source=cypress&utm_medium=referral&utm_campaign=202110_globe_en_all_integration-an_vanitylink) – Getting started with PSoC™ 6 MCU on ModusToolbox™; software <br> [AN215656](https://www.infineon.com/dgdl/Infineon-AN215656_PSoC_6_MCU_Dual-CPU_System_Design-ApplicationNotes-v09_00-EN.pdf?fileId=8ac78c8c7cdc391c017d0d3180c4655f&utm_source=cypress&utm_medium=referral&utm_campaign=202110_globe_en_all_integration-an_vanitylink) – PSoC™ 6 MCU: Dual-CPU system design | [Using ModusToolbox™; software](https://github.com/Infineon/Code-Examples-for-ModusToolbox-Software) on GitHub <br> [Using PSoC™; Creator](https://www.infineon.com/cms/en/design-support/software/code-examples/psoc-3-4-5-code-examples-for-psoc-creator/?utm_source=cypress&utm_medium=referral&utm_campaign=202110_globe_en_all_integration-code_example) |
+| Application notes    | [AN228571](https://www.infineon.com/dgdl/Infineon-AN228571_Getting_started_with_PSoC_6_MCU_on_ModusToolbox_software-ApplicationNotes-v06_00-EN.pdf?fileId=8ac78c8c7cdc391c017d0d36de1f66d1&utm_source=cypress&utm_medium=referral&utm_campaign=202110_globe_en_all_integration-an_vanitylink) – Getting started with PSoC™ 6 MCU on ModusToolbox™ software <br> [AN215656](https://www.infineon.com/dgdl/Infineon-AN215656_PSoC_6_MCU_Dual-CPU_System_Design-ApplicationNotes-v09_00-EN.pdf?fileId=8ac78c8c7cdc391c017d0d3180c4655f&utm_source=cypress&utm_medium=referral&utm_campaign=202110_globe_en_all_integration-an_vanitylink) – PSoC™ 6 MCU: Dual-CPU system design | [Using ModusToolbox™ software](https://github.com/Infineon/Code-Examples-for-ModusToolbox-Software) on GitHub <br> [Using PSoC™ Creator](https://www.infineon.com/cms/en/design-support/software/code-examples/psoc-3-4-5-code-examples-for-psoc-creator/?utm_source=cypress&utm_medium=referral&utm_campaign=202110_globe_en_all_integration-code_example) |
 | Device documentation | [PSoC™ 6 MCU datasheets](https://www.infineon.com/cms/en/search.html#!view=downloads&term=psoc6&doc_group=Data%20Sheet) <br> [PSoC™ 6 technical reference manuals](https://www.infineon.com/cms/en/search.html#!view=downloads&term=psoc6&doc_group=Additional%20Technical%20Information)                                                                                                                                                                                                                                                                                                                                                                                     |
 | Development kits     | Select your kits from the [Evaluation board finder](https://www.infineon.com/cms/en/design-support/finder-selection-tools/product-finder/evaluation-board)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      |
 | Libraries on GitHub  | [mtb-pdl-cat1](https://github.com/Infineon/mtb-pdl-cat1) – PSoC™ 6 peripheral driver library (PDL) <br> [mtb-hal-cat1](https://github.com/Infineon/mtb-hal-cat1) – Hardware abstraction layer (HAL) library <br> [retarget-io](https://github.com/Infineon/retarget-io) – Utility library to retarget STDIO messages to a UART port                                                                                                                                                                                                                                                                                                                                            |
-| Middleware on GitHub | [capsense](https://github.com/Infineon/capsense) – CAPSENSE™; library and documents <br> [psoc6-middleware](https://github.com/Infineon/modustoolbox-software#psoc-6-middleware-libraries) – Links to all PSoC™ 6 MCU middleware                                                                                                                                                                                                                                                                                                                                                                                                                                               |
-| Tools                | [Eclipse IDE for ModusToolbox™; software](https://www.infineon.com/cms/en/design-support/tools/sdk/modustoolbox-software/) – ModusToolbox™; software is a collection of easy-to-use software and tools enabling rapid development with Infineon MCUs, covering applications from embedded sense and control to wireless and cloud-connected systems using AIROC™; Wi-Fi and Bluetooth® connectivity devices.                                                                                                                                                                                                                                                                    |
+| Middleware on GitHub | [capsense](https://github.com/Infineon/capsense) – CAPSENSE™ library and documents <br> [psoc6-middleware](https://github.com/Infineon/modustoolbox-software#psoc-6-middleware-libraries) – Links to all PSoC™ 6 MCU middleware                                                                                                                                                                                                                                                                                                                                                                                                                                               |
+| Tools                | [Eclipse IDE for ModusToolbox™ software](https://www.infineon.com/cms/en/design-support/tools/sdk/modustoolbox-software/) – ModusToolbox™ software is a collection of easy-to-use software and tools enabling rapid development with Infineon MCUs, covering applications from embedded sense and control to wireless and cloud-connected systems using AIROC™ Wi-Fi and Bluetooth® connectivity devices.                                                                                                                                                                                                                                                                    |
 
 ---
 
