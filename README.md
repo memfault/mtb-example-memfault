@@ -4,7 +4,7 @@ Example application for ModusToolbox, loosely based on the
 [mtb-example-anycloud-secure-tcp-client ](https://github.com/Infineon/mtb-example-anycloud-secure-tcp-client)
 application.
 
-This code example demonstrates the integration of Memfault with PSoC™; 6 MCU
+This code example demonstrates the integration of Memfault with PSoC™ 6 MCU
 with AIROC™ CYW43xxx Wi-Fi & Bluetooth® combo chips.
 
 For step by steps on how to integrate the
@@ -14,25 +14,25 @@ https://mflt.io/mtb-integration-guide
 
 This example application was tested with the following setup:
 
-- [PSoC™; 62S2 Wi-Fi Bluetooth®; pioneer kit](https://www.cypress.com/CY8CKIT-062S2-43012)
+- [PSoC™ 62S2 Wi-Fi Bluetooth®; pioneer kit](https://www.cypress.com/CY8CKIT-062S2-43012)
 - (`CY8CKIT-062S2-43012`) using GNU Arm® embedded compiler v10.3.1 (`GCC_ARM`)
 
 ## Requirements
 
 - [ModusToolbox™; software](https://www.infineon.com/cms/en/design-support/tools/sdk/modustoolbox-software/)
   v3.0 or later (tested with v3.0)
-- PSoC™; 6 Board support package (BSP) minimum required version: 4.0.0
+- PSoC™ 6 Board support package (BSP) minimum required version: 4.0.0
 - Programming language: C
 - Associated parts: All
-  [PSoC™; 6 MCU](https://www.infineon.com/cms/en/product/microcontroller/32-bit-psoc-arm-cortex-microcontroller/psoc-6-32-bit-arm-cortex-m4-mcu)
+  [PSoC™ 6 MCU](https://www.infineon.com/cms/en/product/microcontroller/32-bit-psoc-arm-cortex-microcontroller/psoc-6-32-bit-arm-cortex-m4-mcu)
 
 ## Hardware setup
 
 This example uses the board's default configuration. See the kit user guide to
 ensure that the board is configured correctly.
 
-**Note:** The PSoC™; 6 Bluetooth®; LE pioneer kit (CY8CKIT-062-BLE) and the
-PSoC™; 6 Wi-Fi Bluetooth®; pioneer kit (CY8CKIT-062-WIFI-BT) ship with KitProg2
+**Note:** The PSoC™ 6 Bluetooth®; LE pioneer kit (CY8CKIT-062-BLE) and the
+PSoC™ 6 Wi-Fi Bluetooth®; pioneer kit (CY8CKIT-062-WIFI-BT) ship with KitProg2
 installed. The ModusToolbox™; software requires KitProg3. Before using this code
 example, make sure that the board is upgraded to KitProg3. The tool and
 instructions are available in the
@@ -261,7 +261,7 @@ and for the workaround.
 
 ---
 
-This example uses the Arm® Cortex®-M4 (CM4) CPU of PSoC™; 6 MCU to execute an
+This example uses the Arm® Cortex®-M4 (CM4) CPU of PSoC™ 6 MCU to execute an
 RTOS task (TCP client task). At device reset, the default Cortex®-M0+ (CM0+)
 application enables the CM4 CPU and configures the CM0+ CPU to go to sleep.
 
@@ -278,11 +278,11 @@ command received from the TCP server.
 
 | Resources            | Links                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           |
 | -------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Application notes    | [AN228571](https://www.infineon.com/dgdl/Infineon-AN228571_Getting_started_with_PSoC_6_MCU_on_ModusToolbox_software-ApplicationNotes-v06_00-EN.pdf?fileId=8ac78c8c7cdc391c017d0d36de1f66d1&utm_source=cypress&utm_medium=referral&utm_campaign=202110_globe_en_all_integration-an_vanitylink) – Getting started with PSoC™; 6 MCU on ModusToolbox™; software <br> [AN215656](https://www.infineon.com/dgdl/Infineon-AN215656_PSoC_6_MCU_Dual-CPU_System_Design-ApplicationNotes-v09_00-EN.pdf?fileId=8ac78c8c7cdc391c017d0d3180c4655f&utm_source=cypress&utm_medium=referral&utm_campaign=202110_globe_en_all_integration-an_vanitylink) – PSoC™; 6 MCU: Dual-CPU system design | [Using ModusToolbox™; software](https://github.com/Infineon/Code-Examples-for-ModusToolbox-Software) on GitHub <br> [Using PSoC™; Creator](https://www.infineon.com/cms/en/design-support/software/code-examples/psoc-3-4-5-code-examples-for-psoc-creator/?utm_source=cypress&utm_medium=referral&utm_campaign=202110_globe_en_all_integration-code_example) |
-| Device documentation | [PSoC™; 6 MCU datasheets](https://www.infineon.com/cms/en/search.html#!view=downloads&term=psoc6&doc_group=Data%20Sheet) <br> [PSoC™; 6 technical reference manuals](https://www.infineon.com/cms/en/search.html#!view=downloads&term=psoc6&doc_group=Additional%20Technical%20Information)                                                                                                                                                                                                                                                                                                                                                                                     |
+| Application notes    | [AN228571](https://www.infineon.com/dgdl/Infineon-AN228571_Getting_started_with_PSoC_6_MCU_on_ModusToolbox_software-ApplicationNotes-v06_00-EN.pdf?fileId=8ac78c8c7cdc391c017d0d36de1f66d1&utm_source=cypress&utm_medium=referral&utm_campaign=202110_globe_en_all_integration-an_vanitylink) – Getting started with PSoC™ 6 MCU on ModusToolbox™; software <br> [AN215656](https://www.infineon.com/dgdl/Infineon-AN215656_PSoC_6_MCU_Dual-CPU_System_Design-ApplicationNotes-v09_00-EN.pdf?fileId=8ac78c8c7cdc391c017d0d3180c4655f&utm_source=cypress&utm_medium=referral&utm_campaign=202110_globe_en_all_integration-an_vanitylink) – PSoC™ 6 MCU: Dual-CPU system design | [Using ModusToolbox™; software](https://github.com/Infineon/Code-Examples-for-ModusToolbox-Software) on GitHub <br> [Using PSoC™; Creator](https://www.infineon.com/cms/en/design-support/software/code-examples/psoc-3-4-5-code-examples-for-psoc-creator/?utm_source=cypress&utm_medium=referral&utm_campaign=202110_globe_en_all_integration-code_example) |
+| Device documentation | [PSoC™ 6 MCU datasheets](https://www.infineon.com/cms/en/search.html#!view=downloads&term=psoc6&doc_group=Data%20Sheet) <br> [PSoC™ 6 technical reference manuals](https://www.infineon.com/cms/en/search.html#!view=downloads&term=psoc6&doc_group=Additional%20Technical%20Information)                                                                                                                                                                                                                                                                                                                                                                                     |
 | Development kits     | Select your kits from the [Evaluation board finder](https://www.infineon.com/cms/en/design-support/finder-selection-tools/product-finder/evaluation-board)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      |
-| Libraries on GitHub  | [mtb-pdl-cat1](https://github.com/Infineon/mtb-pdl-cat1) – PSoC™; 6 peripheral driver library (PDL) <br> [mtb-hal-cat1](https://github.com/Infineon/mtb-hal-cat1) – Hardware abstraction layer (HAL) library <br> [retarget-io](https://github.com/Infineon/retarget-io) – Utility library to retarget STDIO messages to a UART port                                                                                                                                                                                                                                                                                                                                            |
-| Middleware on GitHub | [capsense](https://github.com/Infineon/capsense) – CAPSENSE™; library and documents <br> [psoc6-middleware](https://github.com/Infineon/modustoolbox-software#psoc-6-middleware-libraries) – Links to all PSoC™; 6 MCU middleware                                                                                                                                                                                                                                                                                                                                                                                                                                               |
+| Libraries on GitHub  | [mtb-pdl-cat1](https://github.com/Infineon/mtb-pdl-cat1) – PSoC™ 6 peripheral driver library (PDL) <br> [mtb-hal-cat1](https://github.com/Infineon/mtb-hal-cat1) – Hardware abstraction layer (HAL) library <br> [retarget-io](https://github.com/Infineon/retarget-io) – Utility library to retarget STDIO messages to a UART port                                                                                                                                                                                                                                                                                                                                            |
+| Middleware on GitHub | [capsense](https://github.com/Infineon/capsense) – CAPSENSE™; library and documents <br> [psoc6-middleware](https://github.com/Infineon/modustoolbox-software#psoc-6-middleware-libraries) – Links to all PSoC™ 6 MCU middleware                                                                                                                                                                                                                                                                                                                                                                                                                                               |
 | Tools                | [Eclipse IDE for ModusToolbox™; software](https://www.infineon.com/cms/en/design-support/tools/sdk/modustoolbox-software/) – ModusToolbox™; software is a collection of easy-to-use software and tools enabling rapid development with Infineon MCUs, covering applications from embedded sense and control to wireless and cloud-connected systems using AIROC™; Wi-Fi and Bluetooth® connectivity devices.                                                                                                                                                                                                                                                                    |
 
 ---
@@ -292,8 +292,8 @@ command received from the TCP server.
 Infineon provides a wealth of data at www.infineon.com to help you select the
 right device, and quickly and effectively integrate it into your design.
 
-For PSoC™; 6 MCU devices, see
-[How to design with PSoC™; 6 MCU – KBA223067](https://community.infineon.com/t5/Knowledge-Base-Articles/How-to-Design-with-PSoC-6-MCU-KBA223067/ta-p/248857)
+For PSoC™ 6 MCU devices, see
+[How to design with PSoC™ 6 MCU – KBA223067](https://community.infineon.com/t5/Knowledge-Base-Articles/How-to-Design-with-PSoC-6-MCU-KBA223067/ta-p/248857)
 in the Infineon community.
 
 ---
