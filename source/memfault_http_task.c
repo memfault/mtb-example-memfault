@@ -124,9 +124,9 @@ static void prv_auto_connect_to_ap(void) {
     if (connect_to_wifi_ap(ssid, auth_type, password, 2) != CY_RSLT_SUCCESS) {
       MEMFAULT_LOG_ERROR("Failed to connect to Wi-Fi AP w/ saved config");
     }
-  } else if (strnlen(WIFI_SSID, MEMFAULT_WIFI_CONFIG_MAX_SIZE) > 0 &&
-             strnlen(WIFI_AUTH_TYPE, MEMFAULT_WIFI_CONFIG_MAX_SIZE) > 0 &&
-             strnlen(WIFI_PASSWORD, MEMFAULT_WIFI_CONFIG_MAX_SIZE) > 0) {
+  } else if (strlen(WIFI_SSID) > 0 &&
+             strlen(WIFI_AUTH_TYPE) > 0 &&
+             strlen(WIFI_PASSWORD) > 0) {
     if (connect_to_wifi_ap(WIFI_SSID, WIFI_AUTH_TYPE, WIFI_PASSWORD, 2) != CY_RSLT_SUCCESS) {
       MEMFAULT_LOG_ERROR("Failed to connect to Wi-Fi AP w/ compile-time config");
     }
