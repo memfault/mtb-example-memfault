@@ -9,16 +9,12 @@
 #include "cyhal.h"
 
 // #define WIFI_SSID "FILLMEIN"
+// #define WIFI_PASSWORD "FILLMEIN"
 //! Please see "wifi_utils_str_to_authtype" for string examples
 // #define WIFI_AUTH_TYPE "FILLMEIN"
-// #define WIFI_PASSWORD "FILLMEIN"
 
 // Get a project key from: https://mflt.io/project-key
 // #define MEMFAULT_PROJECT_KEY "YOUR_PROJECT_KEY"
-
-#if defined(__has_include) && __has_include("memfault_example_app_config.h")
-#include "memfault_example_app_config.h"
-#endif
 
 //! Creates a task which will manage the Memfault CLI
 void memfault_cli_task_start(void);

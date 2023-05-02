@@ -14,8 +14,6 @@
 #include "memfault_example_app.h"
 
 #if !defined(MEMFAULT_PROJECT_KEY)
-  #warning \
-    "#define MEMFAULT_PROJECT_KEY must be specified in source/memfault_example_app.h. Navigate to https://mflt.io/project-key to generate one"
   #define MEMFAULT_PROJECT_KEY ""
 #endif
 
