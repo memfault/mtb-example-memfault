@@ -68,21 +68,18 @@
 #include "memfault_psoc6_port.h"
 
 #if !defined(MEMFAULT_POST_SEND_INTERVAL_MS)
-#define MEMFAULT_POST_SEND_INTERVAL_MS              (60 * 1000)
+  #define MEMFAULT_POST_SEND_INTERVAL_MS              (60 * 1000)
 #endif
 
 #if !defined(WIFI_SSID)
-  #warning "WIFI_SSID should be defined in source/memfault_example_app.h"
   #define WIFI_SSID ""
 #endif
 
 #if !defined(WIFI_AUTH_TYPE)
-  #warning "WIFI_AUTH_TYPE should be defined in source/memfault_example_app.h"
   #define WIFI_AUTH_TYPE ""
 #endif
 
 #if !defined(WIFI_PASSWORD)
-  #warning "WIFI_PASSWORD should be defined in source/memfault_example_app.h"
   #define WIFI_PASSWORD ""
 #endif
 
