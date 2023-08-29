@@ -7,6 +7,7 @@
 
 #include <inttypes.h>
 #include <stdint.h>
+#include <stdio.h>
 
 #include "cy_device_headers.h"
 #include "cy_syslib.h"

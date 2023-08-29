@@ -95,6 +95,10 @@ MBEDTLSFLAGS = MBEDTLS_USER_CONFIG_FILE='"mbedtls_user_config.h"'
 # Add additional defines to the build process (without a leading -D).
 DEFINES=$(MBEDTLSFLAGS) CYBSP_WIFI_CAPABLE CY_RETARGET_IO_CONVERT_LF_TO_CRLF CY_RTOS_AWARE
 
+# Set MEMFAULT_PLATFORM_CONFIG_FILE to the port's config file
+# This will automatically include the application's `configs/memfault_platform_config.h`
+DEFINES+=MEMFAULT_PLATFORM_CONFIG_FILE=\"ports/cypress/psoc6/configs/memfault_mtb_platform_config.h\"
+
 # CY8CPROTO-062-4343W board shares the same GPIO for the user button (USER BTN1)
 # and the CYW4343W host wake up pin. Since this example can use the GPIO for  
 # interfacing with the user button, the SDIO interrupt to wake up the host is

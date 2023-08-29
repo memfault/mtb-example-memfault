@@ -10,7 +10,6 @@ extern "C" {
 #endif
 
 #define MEMFAULT_COREDUMP_COLLECT_LOG_REGIONS 1
-#include "ports/cypress/psoc6/templates/memfault_platform_config.h"
 
 #ifdef __cplusplus
 }
