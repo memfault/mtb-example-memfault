@@ -150,7 +150,10 @@ static cy_rslt_t boot_wifi_subsystem(void) {
   MEMFAULT_LOG_INFO("Wi-Fi Connection Manager initialized.");
 
   // Note: Must be called after cy_wcm_init()
+
+#if MEMFAULT_PORT_WIFI_TRACKING_ENABLED
   memfault_wcm_metrics_boot();
+#endif  // MEMFAULT_PORT_WIFI_TRACKING_ENABLED
 
   prv_auto_connect_to_ap();
 
