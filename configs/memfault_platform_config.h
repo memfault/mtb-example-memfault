@@ -10,6 +10,8 @@ extern "C" {
 #endif
 
 #define MEMFAULT_COREDUMP_COLLECT_LOG_REGIONS 1
+// Currently unavailable for this example app.
+#define MEMFAULT_FREERTOS_COLLECT_THREAD_METRICS 0
 
 #ifdef __cplusplus
 }
